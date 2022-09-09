@@ -37,7 +37,7 @@ const returnMsg = (errCode, message, data) => {
 }
 
 // 数据库操作封装
-const queryFn = (sql) => {
+const queryFn = sql => {
   return new Promise((resolve, reject) => {
     query(sql, (err, rows) => {
       if (err) reject(err)
@@ -47,7 +47,7 @@ const queryFn = (sql) => {
 }
 
 // 鉴权函数
-const jwtVerify = (token) => {
+const jwtVerify = token => {
   try {
     jwt.verify(token, 'zhaowenxian')
   } catch (err) {
@@ -62,5 +62,6 @@ module.exports = {
   port,
   query,
   returnMsg,
-  queryFn
+  queryFn,
+  jwtVerify
 }
