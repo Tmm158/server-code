@@ -1,4 +1,5 @@
 const mysql = require('mysql')
+const jwt = require('jsonwebtoken')
 let host = 'http://127.0.0.1'
 let port = 9000
 
@@ -43,6 +44,17 @@ const queryFn = (sql) => {
       resolve(rows)
     })
   })
+}
+
+// 鉴权函数
+const jwtVerify = (token) => {
+  try {
+    jwt.verify(token, 'zhaowenxian')
+  } catch (err) {
+    // 鉴权失败
+    return false
+  }
+  return true
 }
 
 module.exports = {

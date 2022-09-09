@@ -3,7 +3,7 @@ const router = new Router()
 const jwt = require('jsonwebtoken')
 const { returnMsg, query, queryFn } = require('../../utils')
 
-router.post('/', async (ctx) => {
+router.post('/', async ctx => {
   let { username, password } = ctx.request.body
 
   if (username && password) {
@@ -22,7 +22,12 @@ router.post('/', async (ctx) => {
       await queryFn(sql1)
       // 查询用户
       let result1 = await queryFn(sql)
-      ctx.body = returnMsg(0, '登陆成功', result1)
+      let obj = {
+        username: result1[0].username,
+        'cms-token': result1[0].token,
+        avatar: result1[0].avatar
+      }
+      ctx.body = returnMsg(0, '登陆成功', obj)
     } else {
       // 不存在该用户
       ctx.body = returnMsg(2, '用户不存在', '请注册')
